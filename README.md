@@ -1,8 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 11252857-cpen208-courseproject
 
 ## Getting Started
 
-First, run the development server:
+> Navigate to root directory
+> Run command `npm install` to install all dependencies
+
+Run the development server:
 
 ```bash
 npm run dev
