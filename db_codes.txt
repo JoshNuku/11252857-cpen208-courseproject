@@ -1,0 +1,87 @@
+-- CREATE SCHEMA student_info;
+-- CREATE SCHEMA course_management;
+-- CREATE SCHEMA finance;
+
+CREATE TABLE student_info.students (
+    student_id int PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+	level int not null,
+    password varchar(255) not null
+	);
+	
+	-- Student Fees Payments
+CREATE TABLE finance.student_fees (
+    payment_id SERIAL PRIMARY KEY,
+    student_id INTEGER NOT NULL REFERENCES student_info.students(student_id),
+    amount NUMERIC(10,2) NOT NULL,
+    payment_date DATE NOT NULL
+);
+
+-- Course Enrollment
+CREATE TABLE course_management.courses (
+    course_code VARCHAR(20) PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    credits INTEGER NOT NULL
+level int,
+course_info text,
+lecturer text,
+ta text,
+);
+
+CREATE TABLE course_management.course_enrollment (
+    enrollment_id SERIAL PRIMARY KEY,
+    student_id INTEGER NOT NULL REFERENCES student_info.students(student_id),
+    course_code VARCHAR(20) NOT NULL REFERENCES course_management.courses(course_code),
+ req_date date default current_date
+);
+
+-- Lecturers to Course Assignment
+CREATE TABLE course_management.lecturers (
+    lecturer_id SERIAL PRIMARY KEY,
+    name text,
+    email VARCHAR(100) NOT NULL UNIQUE
+);
+
+
+
+-- Lecturers to TA assignment
+CREATE TABLE course_management.teaching_assistants (
+    ta_id SERIAL PRIMARY KEY,
+ name text,
+    email VARCHAR(100) NOT NULL UNIQUE
+);
+
+INSERT INTO course_management.courses(
+	course_code, course_name, credits, level, course_info,lecturer,ta)
+	VALUES ( 'CPEN 202', 'Data Structures and Algorithm',2,200, 'History and overview of data structures and algorithms, role of algorithms in computing. Pointers and Structures: Pointer Data Types and Pointer Variables, Introduction to Structures, Accessing Structure Members, Pointers and Structures as Structure Members. Fundamental concepts: Recursion, Divide-and-Conquer , Backtracking.','Dr. Mageret Ansah','Foster'),
+	('CPEN 206','linear Circuit',3,200,'History and overview of linear circuits, reasons for studying linear circuits, areas of applications, relevance of linear circuits to computer engineering. Circuit components – resistance, reactance, inductance, capacitance, active and reactive elements, resistance and impedance. Circuit configurations: series, parallel and hybrid configuration of circuits and applications. Circuit laws: Ohm’s law, Kirchhoff law, dependent and independent sources, voltage and current divider circuits.','Dr. Mills','Hakeem'),
+	('CPEN 212','Data Communications',2,200,'History and overview of information transmission, reasons for studying data transmission, modern trends in telecommunication technology for data transmission, role of information transmission in computer engineering. Fundamental principles: telecommunication signals and their representation, building blocks of a telecommunication systems, description of communication systems types - optical fiber system, microwave system, satellite system, mobile communication system, basic concepts of signal transmission in transmission media, time and frequency signal bandwidth, signal-to-noise ratio, channel and channel capacity, sampling theorem.','Dr. Isaac','Samed'),
+	('SENG 202','Differential Equations',4,200,'The course covers differential equations (first and second order ordinary differential equations, series solutions, and system of ordinary differential equations), Initial-value problems (Laplace transforms, partial differential equations, boundary-value problems, Fourier series and transforms), and applications.','Dr Kutor','Thaddeus');
+
+
+
+	
+	
+	-- Create a database function to calculate outstanding fees for each student
+CREATE OR REPLACE FUNCTION finance.get_outstanding_fees()
+RETURNS TABLE (
+    student_id INTEGER,
+    outstanding_fees NUMERIC(10,2)
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        s.student_id,
+        COALESCE(SUM(c.credits * 500.00) - COALESCE(SUM(f.amount), 0.00), 0.00) AS outstanding_fees
+    FROM student_info.students s
+    LEFT JOIN course_management.course_enrollment c ON s.student_id = c.student_id
+    LEFT JOIN finance.student_fees f ON s.student_id = f.student_id
+    GROUP BY s.student_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Test the function
+SELECT * FROM finance.get_outstanding_fees();
