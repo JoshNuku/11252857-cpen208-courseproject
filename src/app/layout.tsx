@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./Providers";
+// import { SessionProvider } from "next-auth/react";
 
 const inter = DM_Sans({ subsets: ["latin"] });
 
@@ -20,7 +22,7 @@ export default function RootLayout({
         className={`${inter.className} bg-gray-50 dark:bg-gray-900 flex flex-col min-h-screen font-['DM-Sans']`}
         style={{ fontFamily: "DM Sans" }}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

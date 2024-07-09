@@ -1,12 +1,34 @@
+/* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { Login } from "@/actions";
+//import { Login } from "@/actions";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 
+import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
+import { Login } from "@/actions";
+
+export function verifyCredentials({ student_id, password }: any) {
+  const result = signIn("credentials", {
+    student_id,
+    password,
+    redirect: false,
+  });
+  return result;
+}
 export default function LoginPage() {
+  const router = useRouter();
+  const user = useSession();
   const [formState, action] = useFormState(Login, { message: "" });
+
+  const { data: session, status } = user;
+
+  if (status === "authenticated") {
+    return router.push(`/${session.user.id}`);
+  }
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -16,6 +38,11 @@ export default function LoginPage() {
         >
           Comp. Eng
         </a>
+        {formState?.message ? (
+          <div className="my-3 p-3 bg-red-200 rounded border-red-600 text-center">
+            {formState.message}
+          </div>
+        ) : null}
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -62,12 +89,12 @@ export default function LoginPage() {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don't have an account yet?{" "}
-                <Link
+                <a
                   href="/register"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Register
-                </Link>
+                </a>
               </p>
             </form>
           </div>

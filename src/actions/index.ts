@@ -1,37 +1,48 @@
-"use server";
 import axios from "axios";
-const bcrypt = require("bcrypt");
+import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
+import { verifyCredentials } from "@/app/login/page";
 
 export async function SignUp(
   formState: { message: string },
   formData: FormData
 ) {
-  console.log(formData);
   const data = {
     student_id: formData.get("student_id") as string,
     first_name: formData.get("first_name") as string,
     last_name: formData.get("last_name") as string,
     email: formData.get("email") as string,
     level: formData.get("level") as string,
-    hash: formData.get("password") as string,
+    password: formData.get("password") as string,
   };
   try {
-    // if (typeof data.student_id !== "string") return { message: "" };
-    await bcrypt.hash(data.hash, 12, async function (err: Error, hash: string) {
-      data.hash = hash;
-      console.log(data.hash, hash);
-      // const student = await axios.post(
-      //   "http://localhost:5050/api/students",
-      //   data
-      // );
-      // if (!student) return { message: "Could not create account" };
-      // console.log(student);
+    const hash = await bcrypt.hash(data.password, 12);
+    if (!hash)
+      return { message: "Something went wrong, refresh and try again" };
+    data.password = hash;
+
+    const student = await axios.post(
+      "http://localhost:5051/api/add_student",
+      data
+    );
+    if (!student.data.student_id) {
+      return {
+        message: student.data.replaceAll("\n", ",").split(",")[1].trim(),
+      };
+    }
+    // Sign in the user after successful registration
+    const result = await verifyCredentials({
+      student_id: student.data.student_id,
+      password: formData.get("password") as string,
     });
+
+    console.log(result);
+    if (result?.error) {
+      return { message: result.error };
+    }
   } catch (e) {
-    console.log(e);
+    return { message: "Could not create account refresh and try again" };
   }
-  if (!data.student_id) return { message: "Could not create account" };
   redirect(`/${data.student_id}`);
 }
 
@@ -40,6 +51,12 @@ export async function Login(
   formData: FormData
 ) {
   const student_id = formData.get("student_id") as string;
-  if (!student_id) return { message: "Could not create account" };
-  redirect(`/${student_id}`);
+  const password = formData.get("password") as string;
+  const result = await verifyCredentials({ student_id, password });
+
+  if (result?.error) {
+    return { message: "Wrong student ID or password" };
+  }
+  return { message: "Credentials approved" };
+  //redirect(`/${student_id}`);
 }

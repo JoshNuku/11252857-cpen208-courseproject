@@ -1,8 +1,8 @@
 interface coursesProps {
   props: {
-    courseName: string;
-    courseCode: string;
-    credit: string;
+    course_name: string;
+    course_code: string;
+    credits: number;
     lecturer: string;
     ta: string;
   };
@@ -28,15 +28,15 @@ export default function Select_course({ props }: coursesProps) {
           scope="row"
           className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
-          <div className="flex items-center mr-3">{props.courseName}</div>
+          <div className="flex items-center mr-3">{props.course_name}</div>
         </th>
         <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-            {props.courseCode}
+            {props.course_code}
           </span>
         </td>
         <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          <div className="flex items-center">{props.credit} </div>
+          <div className="flex items-center">{props.credits} </div>
         </td>
         <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {props.lecturer}{" "}

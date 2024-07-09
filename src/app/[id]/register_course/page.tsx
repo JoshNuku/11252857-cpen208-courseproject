@@ -1,41 +1,55 @@
+/* eslint-disable @next/next/no-async-client-component */
+"use client";
 import Footer from "@/app/components/footer";
 import Navbar from "@/app/components/navbar";
 import Select_course from "@/app/components/select_course";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
-export default function RegisterCourse() {
-  const courses = [
-    {
-      courseName: "Data Structures And Algorithm",
-      courseCode: "CPEN 202",
-      credit: "2",
-      lecturer: "Dr. Mageret",
-      ta: "Foster",
-    },
-    {
-      courseName: "Linear Circuit",
-      courseCode: "CPEN 206",
-      credit: "3",
-      lecturer: "Dr. Mills",
-      ta: "Hakeem",
-    },
-    {
-      courseName: "Data Communication",
-      courseCode: "CPEN 212",
-      credit: "2",
-      lecturer: "Dr. Isaac",
-      ta: "Abdul Samed",
-    },
-    {
-      courseName: "Differential Equations",
-      courseCode: "SENG 202",
-      credit: "4",
-      lecturer: "Dr. Kutor",
-      ta: "Thaddeus",
-    },
-  ];
+export default async function RegisterCourse() {
+  const user = useSession();
+
+  const courses = await axios.get("http://localhost:5051/courses/all_courses");
+
+  const { data: data } = courses.data;
+
+  // const courses = [
+  //   {
+  //     courseName: "Data Structures And Algorithm",
+  //     courseCode: "CPEN 202",
+  //     credit: "2",
+  //     lecturer: "Dr. Mageret",
+  //     ta: "Foster",
+  //   },
+  //   {
+  //     courseName: "Linear Circuit",
+  //     courseCode: "CPEN 206",
+  //     credit: "3",
+  //     lecturer: "Dr. Mills",
+  //     ta: "Hakeem",
+  //   },
+  //   {
+  //     courseName: "Data Communication",
+  //     courseCode: "CPEN 212",
+  //     credit: "2",
+  //     lecturer: "Dr. Isaac",
+  //     ta: "Abdul Samed",
+  //   },
+  //   {
+  //     courseName: "Differential Equations",
+  //     courseCode: "SENG 202",
+  //     credit: "4",
+  //     lecturer: "Dr. Kutor",
+  //     ta: "Thaddeus",
+  //   },
+  // ];
+
   function displayCourses() {
     const arr = [];
-    for (let course of courses) {
+    const courseInfo = data[0].filter(
+      (course: any) => course.level == user.data?.user.level
+    );
+    for (let course of courseInfo) {
       arr.push(<Select_course props={course} />);
     }
     return arr;
@@ -92,4 +106,7 @@ export default function RegisterCourse() {
       <Footer />
     </div>
   );
+}
+function getAllCourses() {
+  throw new Error("Function not implemented.");
 }
