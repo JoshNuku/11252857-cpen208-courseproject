@@ -5,8 +5,11 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { useState } from "react";
+interface navProps {
+  id: string;
+}
 
-export default function Navbar() {
+export default function Navbar({ id }: navProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -76,8 +79,8 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a
-                href="/11252857"
+              <Link
+                href={`/${id}`}
                 className={
                   pathname !== "/11252857"
                     ? "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
@@ -85,11 +88,11 @@ export default function Navbar() {
                 }
               >
                 Dashboard
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/11252857/register_course"
+              <Link
+                href={`/${id}/register_course`}
                 className={
                   !pathname.includes("register_course")
                     ? "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
@@ -97,11 +100,11 @@ export default function Navbar() {
                 }
               >
                 Enroll in a course
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/11252857/myinfo"
+              <Link
+                href={`/${id}/myinfo`}
                 className={
                   !pathname.includes("myinfo")
                     ? "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
@@ -109,7 +112,7 @@ export default function Navbar() {
                 }
               >
                 My Info
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

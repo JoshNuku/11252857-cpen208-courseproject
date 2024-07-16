@@ -1,4 +1,18 @@
-export default function Card2() {
+import moment from "moment";
+export interface cardProps {
+  course_name: string;
+  course_code: string;
+  credits: number;
+  lecturer: string;
+  ta: string;
+  date: string;
+  course_info: string;
+  level: number;
+  id: string;
+}
+
+export default async function Card2(props: cardProps) {
+  const date = moment(props.date).fromNow();
   return (
     <div className="grid grid-cols-1 gap-1 md:grid-cols-2  my-10">
       <div className="rounded-lg px-4">
@@ -12,36 +26,28 @@ export default function Card2() {
       <section className="bg-white dark:bg-gray-900 my-23 flex self-center">
         <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
           <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">
-            CPEN - 208 Software Engineering
+            {props.course_code} {props.course_name}
           </h2>
           <p className="mb-4 text-xl font-extrabold leading-none text-gray-900 md:text-2xl dark:text-white">
-            Mr. John Assiamah
+            {props.lecturer}
           </p>
           <dl>
             <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-gray-500">
-              TA Foster
+              TA {props.ta}
             </dt>
             <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-              History and overview of software engineering, reasons for studying
-              the software engineering, and role of software engineering in
-              computer engineering. Introduction to the process of creating
-              software systems. Software processes: software life cycle, process
-              model, process assessment models, and software process metrics.
-              Requirements and specification: software requirements
-              specification, requirements analysis modeling techniques,
-              functional and nonfunctional requirements, prototyping, concepts
-              of formal specification techniques
+              {props.course_info}
             </dd>
           </dl>
           <dl className="flex items-center space-x-6">
             <div>
               <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                3 Credit hours
+                {props.credits} Credit hours
               </dd>
             </div>
             <div>
               <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                Registered 2 days ago
+                Registered {date}
               </dd>
             </div>
           </dl>

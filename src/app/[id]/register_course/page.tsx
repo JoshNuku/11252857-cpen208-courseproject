@@ -6,7 +6,9 @@ import Select_course from "@/app/components/select_course";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-export default async function RegisterCourse() {
+export default async function RegisterCourse(props: {
+  params: { id: string };
+}) {
   const user = useSession();
 
   const courses = await axios.get("http://localhost:5051/courses/all_courses");
@@ -56,7 +58,7 @@ export default async function RegisterCourse() {
   }
   return (
     <div>
-      <Navbar />
+      <Navbar id={props.params.id} />
       <div className="mt-5 pb-40">
         <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased ">
           <div className="mx-auto max-w-screen-2xl px-4 lg:px-12 flex-grow">

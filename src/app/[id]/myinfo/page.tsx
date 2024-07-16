@@ -1,10 +1,10 @@
 import Footer from "@/app/components/footer";
 import Navbar from "@/app/components/navbar";
 
-export default function AboutMePage() {
+export default function AboutMePage(props: { params: { id: string } }) {
   return (
     <div className="">
-      <Navbar />
+      <Navbar id={props.params.id} />
       <h1 className="text-center dark:text-white mt-9 text-4xl font-medium">
         {" "}
         My Info

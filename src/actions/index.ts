@@ -60,3 +60,23 @@ export async function Login(
   return { message: "Credentials approved" };
   //redirect(`/${student_id}`);
 }
+
+export async function getRegisteredCourses(id: string) {
+  const courses = await axios.get("http://localhost:5051/courses/all_courses");
+
+  const { data: data } = courses.data;
+  const courseInfo = data?.flat();
+  console.log(courseInfo);
+  const regCourses = courseInfo.filter((el: any) => el?.student_id == id);
+
+  const regCoursesInfo = [];
+  for (let courses of regCourses) {
+    for (let info of data[0]) {
+      if (info.course_code == courses.course_code) {
+        info.date = courses.reg_date;
+        regCoursesInfo.push(info);
+      }
+    }
+  }
+  return regCoursesInfo;
+}
