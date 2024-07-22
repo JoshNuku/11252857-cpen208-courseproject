@@ -9,21 +9,19 @@ export interface cardProps {
   course_info: string;
   level: number;
   id: string;
+  img: string;
 }
 
 export default async function Card2(props: cardProps) {
   const date = moment(props.date).fromNow();
+
   return (
     <div className="grid grid-cols-1 gap-1 md:grid-cols-2  my-10">
       <div className="rounded-lg px-4">
-        <img
-          className="rounded-lg"
-          src="https://www.isbatuniversity.ac.ug/online/wp-content/uploads/2024/03/danial-igdery-FCHlYvR5gJI-unsplash.jpg"
-          alt=""
-        />
+        <img className="rounded-lg" src={props.img} alt="" />
       </div>
 
-      <section className="bg-white dark:bg-gray-900 my-23 flex self-center">
+      <section className="bg-gray-50 dark:bg-gray-900 my-23 flex self-center">
         <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
           <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">
             {props.course_code} {props.course_name}

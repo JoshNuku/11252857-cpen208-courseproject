@@ -13,6 +13,7 @@ import com._7.studentapi.models.courses;
 @RestController
 @RequestMapping("/courses")
 
+
 public class courses_info {
     
 
@@ -21,8 +22,9 @@ public class courses_info {
     @Autowired
     private db_config cls_db_config;
 
-     @CrossOrigin(origins = "*")
+     
     @GetMapping("/all_courses")
+    @CrossOrigin(origins = "*")
    public String all_courses (){
     
   course.con= cls_db_config.getCon();
@@ -30,7 +32,9 @@ public class courses_info {
 
     return result;
    }
+
    @PostMapping("/add_course")
+   @CrossOrigin(origins = "*")
    public String add_course (@RequestBody String json_request){
     
     course.con= cls_db_config.getCon();

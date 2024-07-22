@@ -11,6 +11,7 @@ export async function displayCourses(
   courseCode: string | null
 ) {
   const courses = await getRegisteredCourses(id);
+  console.log(courses);
   if (
     courseCode &&
     !(courseCode?.startsWith("CPEN") || courseCode?.startsWith("SENG"))
@@ -30,6 +31,7 @@ export async function displayCourses(
         date={props.date}
         level={props.level}
         id={id}
+        img={props.img}
       />
     );
     if (courseCode == props.course_code.replace(" ", "")) return card;

@@ -15,35 +15,33 @@ export async function SignUp(
     level: formData.get("level") as string,
     password: formData.get("password") as string,
   };
-  try {
-    const hash = await bcrypt.hash(data.password, 12);
-    if (!hash)
-      return { message: "Something went wrong, refresh and try again" };
-    data.password = hash;
 
-    const student = await axios.post(
-      "http://localhost:5051/api/add_student",
-      data
-    );
-    if (!student.data.student_id) {
-      return {
-        message: student.data.replaceAll("\n", ",").split(",")[1].trim(),
-      };
-    }
-    // Sign in the user after successful registration
-    const result = await verifyCredentials({
-      student_id: student.data.student_id,
-      password: formData.get("password") as string,
-    });
+  const hash = await bcrypt.hash(data.password, 12);
+  if (!hash) return { message: "Something went wrong, refresh and try again" };
+  data.password = hash;
 
-    console.log(result);
-    if (result?.error) {
-      return { message: result.error };
-    }
-  } catch (e) {
-    return { message: "Could not create account refresh and try again" };
+  const student = await axios.post(
+    "http://localhost:5051/api/add_student",
+    data
+  );
+  if (!student.data.student_id) {
+    return {
+      message: student.data.replaceAll("\n", ",").split(",")[1].trim(),
+    };
+  }
+  // Sign in the user after successful registration
+  const result = await verifyCredentials({
+    student_id: student.data.student_id,
+    password: formData.get("password") as string,
+  });
+
+  console.log(result);
+  if (result?.error) {
+    return { message: result.error };
   }
   redirect(`/${data.student_id}`);
+
+  //  return { message: "Could not create account refresh and try again" };
 }
 
 export async function Login(
@@ -66,7 +64,7 @@ export async function getRegisteredCourses(id: string) {
 
   const { data: data } = courses.data;
   const courseInfo = data?.flat();
-  console.log(courseInfo);
+
   const regCourses = courseInfo.filter((el: any) => el?.student_id == id);
 
   const regCoursesInfo = [];
@@ -74,9 +72,42 @@ export async function getRegisteredCourses(id: string) {
     for (let info of data[0]) {
       if (info.course_code == courses.course_code) {
         info.date = courses.reg_date;
+        info.img = courses.img;
         regCoursesInfo.push(info);
       }
     }
   }
   return regCoursesInfo;
+}
+
+export async function registerCourse(
+  course_code: string,
+  id: string,
+  course_name: string
+) {
+  const img = await searchPhotos(course_name);
+  const course = await axios.post("http://localhost:5051/courses/add_course", {
+    student_id: parseInt(id),
+    course_code,
+    img,
+  });
+  console.log(course);
+}
+
+export async function searchPhotos(query: string) {
+  try {
+    // Make the API request
+    const response = await axios.get(
+      `https://pixabay.com/api/?key=16477272-84df86c59f59da088a9d9a790&q=${query}&image_type=photo&pretty=true&per_page=3`
+    );
+    //console.log(response.data);
+    // Process the response data
+    const images = response.data.hits.map((photo: any) => {
+      return photo.webformatURL;
+    });
+    console.log(images);
+    return images[1];
+  } catch (error) {
+    console.error(error);
+  }
 }

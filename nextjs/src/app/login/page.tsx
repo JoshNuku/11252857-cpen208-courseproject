@@ -30,13 +30,19 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <section
+      className="flex justify-center items-center bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply h-screen"
+      style={{
+        backgroundImage:
+          "url('https://images.pexels.com/photos/1416367/pexels-photo-1416367.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
+      }}
+    >
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="/"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+          className="flex items-center mb-4 text-xl font-semibold text-gray-900 text-white mt-10 border rounded-lg  p-5"
         >
-          Comp. Eng
+          Computer Engineering Department
         </a>
         {formState?.message ? (
           <div className="my-3 p-3 bg-red-200 rounded border-red-600 text-center">

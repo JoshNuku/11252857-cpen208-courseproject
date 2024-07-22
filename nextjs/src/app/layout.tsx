@@ -3,6 +3,9 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Providers";
 // import { SessionProvider } from "next-auth/react";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
 const inter = DM_Sans({ subsets: ["latin"] });
 

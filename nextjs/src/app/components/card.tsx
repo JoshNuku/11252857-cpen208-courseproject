@@ -2,16 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { cardProps } from "./card2";
 
-export default function Card(props: cardProps) {
+export default async function Card(props: cardProps) {
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-10 mx-5">
       <img
         className="rounded-t-lg"
-        src="https://www.isbatuniversity.ac.ug/online/wp-content/uploads/2024/03/danial-igdery-FCHlYvR5gJI-unsplash.jpg"
+        src={props.img}
         alt=""
+        style={{ height: "15em", width: "25em" }}
       />
 
-      <div className="p-5">
+      <div className="pt-5 px-3 pb-2">
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {props.course_code} {props.course_name}
         </h5>

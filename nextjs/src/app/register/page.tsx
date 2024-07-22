@@ -8,31 +8,36 @@ import Link from "next/link";
 export default function RegisterPage() {
   const [formState, action] = useFormState(SignUp, { message: "" });
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
+    <section
+      className="flex justify-center items-center bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply md:h-screen"
+      style={{
+        backgroundImage:
+          "url('https://images.pexels.com/photos/1509534/pexels-photo-1509534.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
+      }}
+    >
+      <div className="flex flex-col items-center justify-center px-4 py-6 mx-auto lg:py-0">
         <a
           href="/"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white mt-5"
+          className="flex items-center mb-4 text-xl font-semibold text-white mt-10 border rounded-lg  p-5"
         >
-          {" "}
-          Comp. Eng
+          Computer Engineering Department
         </a>
         {formState.message ? (
           <div className="my-2 p-2 bg-red-200 rounded border-red-200 text-center">
             {formState.message}
           </div>
         ) : null}
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mb-6 ">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8 ">
-            <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        <div className="bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-sm xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-12">
+          <div className="space-y-4 md:space-y-5 sm:p-6 p-5">
+            <h1 className="text-lg text-center font-bold leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" action={action}>
-              <div className="grid gap-3 md:grid-cols-2">
+            <form className="space-y-3 md:space-y-4" action={action}>
+              <div className="grid gap-2 md:grid-cols-2 ">
                 <div>
                   <label
                     htmlFor="firstname"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     First Name
                   </label>
@@ -40,14 +45,14 @@ export default function RegisterPage() {
                     type="text"
                     name="first_name"
                     id="firstname"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600  w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="lastname"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Lastname
                   </label>
@@ -55,16 +60,16 @@ export default function RegisterPage() {
                     type="text"
                     name="last_name"
                     id="lastname"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>
               </div>
-              <div className="grid gap-3 md:grid-cols-2">
+              <div className="grid gap-2 md:grid-cols-2">
                 <div>
                   <label
                     htmlFor="student_id"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Student ID
                   </label>
@@ -72,34 +77,34 @@ export default function RegisterPage() {
                     type="number"
                     name="student_id"
                     id="student_id"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="level"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Level
                   </label>
                   <select
                     name="level"
                     id="level"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   >
-                    <option value={100}> 100</option>
-                    <option value={200}> 200</option>
-                    <option value={300}> 300</option>
-                    <option value={400}> 400</option>
+                    <option value={100}>100</option>
+                    <option value={200}>200</option>
+                    <option value={300}>300</option>
+                    <option value={400}>400</option>
                   </select>
                 </div>
               </div>
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Email
                 </label>
@@ -107,14 +112,14 @@ export default function RegisterPage() {
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
               </div>
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
                 </label>
@@ -122,14 +127,13 @@ export default function RegisterPage() {
                   type="password"
                   name="password"
                   id="password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
               </div>
-
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 Register
               </button>
