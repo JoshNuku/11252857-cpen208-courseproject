@@ -19,6 +19,7 @@ public class students_info {
     @Autowired
     private db_config cls_db_config;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/all_students")
    public String all_students (){
     

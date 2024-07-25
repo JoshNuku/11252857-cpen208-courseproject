@@ -28,11 +28,14 @@ export default async function Dashboard(props: { params: { id: string } }) {
     setShow(res);
   }
   const { data: session, status } = user;
+
+  if (status === "unauthenticated") router.push("/login");
   const finances = await (
     await axios.get("http://localhost:5051/finances/outstanding_fees")
   ).data.find((stu: any) => stu.student_id == session?.user.id);
   if (!(status === "authenticated") || session.user.id !== props.params.id)
     return router.push("/login");
+
   const regCourses = await displayCourses(Card, props.params.id, null);
   console.log(regCourses);
   return (
@@ -47,7 +50,7 @@ export default async function Dashboard(props: { params: { id: string } }) {
           <div className="">
             <Calender />
           </div>
-          <div className="rounded-lg shadow-lg col-span-2 p-5 bg-white dark:bg-gray-800 me-3 dark:text-white">
+          <div className="rounded-lg shadow-lg col-span-2 p-5 bg-white dark:bg-gray-800 mx-3 dark:text-white">
             <h1 className="mx-3 dark:text-white text-5xl">
               <TfiAnnouncement />
             </h1>

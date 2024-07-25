@@ -47,7 +47,7 @@ export default async function AboutMePage(props: { params: { id: string } }) {
       <div className="flex flex-grow justify-center my-20">
         <Card className="max-w-sm ">
           <div className="flex justify-end px-4 pt-4"></div>
-          <div className="flex flex-col items-center pb-10">
+          <div className="flex flex-col items-center pb-5">
             <svg
               className="w-6/12 rounded-3xl text-white"
               viewBox="0 0 24 24"
