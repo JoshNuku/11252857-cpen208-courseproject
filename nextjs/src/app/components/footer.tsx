@@ -1,3 +1,6 @@
+"use client";
+import { signOut } from "next-auth/react";
+
 export default function Footer() {
   return (
     <footer className="bg-white rounded-lg shadow m-2 dark:bg-gray-800 oinset-x-0 bottom-0">
@@ -17,7 +20,12 @@ export default function Footer() {
           </li>
 
           <li>
-            <a href="/login" className="hover:underline">
+            <a
+              onClick={async function handleLogout() {
+                await signOut({ callbackUrl: "http://localhost:3000/login" });
+              }}
+              className="hover:underline"
+            >
               Logout
             </a>
           </li>

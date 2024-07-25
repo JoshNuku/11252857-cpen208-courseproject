@@ -8,7 +8,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { JSX, useEffect, useState } from "react";
-import { useFormState } from "react-dom";
 
 let selectedCourses: any[] = [];
 let NumOfSelectedCourses = 0;
@@ -19,6 +18,11 @@ export default async function RegisterCourse(props: {
   const user = useSession();
   const router = useRouter();
   const [message, setMessage] = useState("");
+
+  const { data: session, status } = user;
+  if (!(status === "authenticated") || session.user.id !== props.params.id)
+    return router.push("/id/404");
+
   const courses = await axios.get("http://localhost:5051/courses/all_courses");
 
   const { data: data } = courses.data;

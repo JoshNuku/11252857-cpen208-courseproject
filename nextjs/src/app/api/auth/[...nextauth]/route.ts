@@ -4,6 +4,9 @@ import axios from "axios";
 import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
+  session: {
+    maxAge: 5 * 60,
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",

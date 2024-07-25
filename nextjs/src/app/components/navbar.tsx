@@ -3,8 +3,10 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-
+import { CgProfile } from "react-icons/cg";
+import { RxDashboard } from "react-icons/rx";
 import { useState } from "react";
+import { IoCreateOutline } from "react-icons/io5";
 interface navProps {
   id: string;
 }
@@ -13,21 +15,31 @@ export default function Navbar({ id }: navProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  async function handleLogout() {
+    await signOut({ callbackUrl: "http://localhost:3000/login" });
+  }
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+        <Link
+          href="/"
+          className={
+            pathname !== "/"
+              ? "block py-2 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 text-2xl"
+              : "block py-2 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500 text-2xl"
+          }
+          aria-current="page"
+        >
           Computer Engineering
-        </span>
+        </Link>
 
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <button
-            onClick={async () => {
-              await signOut({ callbackUrl: "http://localhost:3000/" });
-            }}
+            onClick={handleLogout}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Logout
@@ -67,27 +79,14 @@ export default function Navbar({ id }: navProps) {
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <Link
-                href="/"
-                className={
-                  pathname !== "/"
-                    ? "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                    : "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
-                }
-                aria-current="page"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
                 href={`/${id}`}
                 className={
-                  pathname !== "/11252857"
+                  pathname !== `/${id}`
                     ? "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                     : "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
                 }
               >
-                Dashboard
+                <RxDashboard className="text-3xl" />
               </Link>
             </li>
             <li>
@@ -95,8 +94,8 @@ export default function Navbar({ id }: navProps) {
                 href={`/${id}/register_course`}
                 className={
                   !pathname.includes("register_course")
-                    ? "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                    : "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
+                    ? "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 text-2xl"
+                    : "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500 text-2xl"
                 }
               >
                 Enroll in a course
@@ -111,7 +110,10 @@ export default function Navbar({ id }: navProps) {
                     : "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
                 }
               >
-                My Info
+                <span>
+                  {" "}
+                  <CgProfile className="text-3xl" />{" "}
+                </span>
               </Link>
             </li>
           </ul>

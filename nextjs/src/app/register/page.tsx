@@ -4,9 +4,17 @@ import { useFormState } from "react-dom";
 import { SignUp } from "@/actions";
 
 import Link from "next/link";
+import { Alert } from "flowbite-react";
+import { useState } from "react";
 
 export default function RegisterPage() {
   const [formState, action] = useFormState(SignUp, { message: "" });
+  const [show, setShow] = useState(false);
+  function handleDismiss() {
+    const res = !show;
+    setShow(res);
+  }
+
   return (
     <section
       className="flex justify-center items-center bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply md:h-screen"
@@ -22,10 +30,12 @@ export default function RegisterPage() {
         >
           Computer Engineering Department
         </a>
-        {formState.message ? (
-          <div className="my-2 p-2 bg-red-200 rounded border-red-200 text-center">
-            {formState.message}
-          </div>
+        {show ? (
+          formState.message ? (
+            <Alert color="failure" className="m-2" onDismiss={handleDismiss}>
+              {formState.message}
+            </Alert>
+          ) : null
         ) : null}
         <div className="bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-sm xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-12">
           <div className="space-y-4 md:space-y-5 sm:p-6 p-5">
@@ -134,6 +144,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                onClick={handleDismiss}
               >
                 Register
               </button>

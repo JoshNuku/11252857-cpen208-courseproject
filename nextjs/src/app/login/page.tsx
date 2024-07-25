@@ -3,12 +3,13 @@
 "use client";
 
 //import { Login } from "@/actions";
-import Link from "next/link";
+import { Alert } from "flowbite-react";
 import { useFormState } from "react-dom";
 
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { Login } from "@/actions";
+import { useState } from "react";
 
 export function verifyCredentials({ student_id, password }: any) {
   const result = signIn("credentials", {
@@ -22,13 +23,21 @@ export default function LoginPage() {
   const router = useRouter();
   const user = useSession();
   const [formState, action] = useFormState(Login, { message: "" });
+  const [show, setShow] = useState(true);
+  let message = "";
+  function handleDismiss() {
+    message = "";
+  }
 
   const { data: session, status } = user;
 
   if (status === "authenticated") {
+    message = "Logged you in";
     return router.push(`/${session.user.id}`);
   }
-
+  if (status == "unauthenticated") {
+    message = "Not Logged In";
+  }
   return (
     <section
       className="flex justify-center items-center bg-no-repeat bg-cover bg-center bg-gray-700 bg-blend-multiply h-screen"
@@ -44,10 +53,12 @@ export default function LoginPage() {
         >
           Computer Engineering Department
         </a>
-        {formState?.message ? (
-          <div className="my-3 p-3 bg-red-200 rounded border-red-600 text-center">
-            {formState.message}
-          </div>
+        {message ? (
+          message || formState.message ? (
+            <Alert color="failure" className="m-2">
+              {formState.message || message}
+            </Alert>
+          ) : null
         ) : null}
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -90,6 +101,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                // onClick={handleDismiss}
               >
                 Sign in
               </button>

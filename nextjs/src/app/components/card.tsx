@@ -4,7 +4,7 @@ import { cardProps } from "./card2";
 
 export default async function Card(props: cardProps) {
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-10 mx-5">
+    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-5 mx-5">
       <img
         className="rounded-t-lg"
         src={props.img}

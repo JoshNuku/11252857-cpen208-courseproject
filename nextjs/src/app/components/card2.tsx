@@ -30,21 +30,21 @@ export default async function Card2(props: cardProps) {
             {props.lecturer}
           </p>
           <dl>
-            <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-gray-500">
+            <dt className="mb-2 font-semibold leading-none text-gray-900 dark:text-gray-50">
               TA {props.ta}
             </dt>
-            <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
+            <dd className="mb-4 font-semibold text-gray-500 sm:mb-5 dark:text-gray-50">
               {props.course_info}
             </dd>
           </dl>
           <dl className="flex items-center space-x-6">
             <div>
-              <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
+              <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-50">
                 {props.credits} Credit hours
               </dd>
             </div>
             <div>
-              <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
+              <dd className="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-50">
                 Registered {date}
               </dd>
             </div>

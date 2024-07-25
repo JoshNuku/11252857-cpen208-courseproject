@@ -2,31 +2,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-html,
-body,
-#__next {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  @apply bg-white dark:bg-gray-900;
-}
-
-.fc {
-  @apply bg-white dark:bg-gray-800 text-black dark:text-white;
-}
-
-.fc button {
-  @apply bg-gray-100 dark:bg-gray-700 text-black dark:text-white;
-}
-
-.fc-toolbar-title {
-  @apply text-black dark:text-white;
-}
-
-.fc-daygrid-day {
-  @apply bg-white dark:bg-gray-800;
-}
