@@ -17,7 +17,11 @@ export async function displayCourses(
   console.log(courses);
   if (
     courseCode &&
-    !(courseCode?.startsWith("CPEN") || courseCode?.startsWith("SENG"))
+    !(
+      courseCode?.startsWith("CPEN") ||
+      courseCode?.startsWith("SENG") ||
+      courseCode?.startsWith("CBAS")
+    )
   )
     notFound();
 
